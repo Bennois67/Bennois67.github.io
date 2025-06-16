@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benny's tic tac toe</title>
+
+
+<style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            margin: 20px auto;
+            width: 315px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            font-size: 2em;
+            text-align: center;
+            border: 2px solid #000;
+            cursor: pointer;
+        }
+        .cell:disabled {
+            cursor: not-allowed;
+        }
+</style>
+</head>
+<body>
+    <h1>Benny's Tic-Tac-Toe Game</h1>
+    <div class="board" id="board"></div>
+    <h2 id="status"></h2>
+    <button onclick="resetGame()">Restart</button>
+</body>
+<script>
+    const board = document.getElementById("board");
+
+
+</script>
