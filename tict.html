@@ -10,31 +10,51 @@
       height: 80px;
       font-size: 30px;
     }
+    .container {
+        display: flex;
+        justify-content: space-evenly;
+    }
   </style>
 </head>
 <body>
 
 <h2>Benny's Tic Tac Toe</h2>
-<table>
-  <tr>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-  </tr>
-  <tr>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-  </tr>
-  <tr>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-    <td><button class="cell" onclick="makeMove(this)"></button></td>
-  </tr>
-</table>
+<p>Welcome to tic tac toe where two players can play together.
+     Use the pointer and click to select a square.
+    The rules are simple, get three of your chosen symbol in a 
+    row while making sure your opponent doesn't.
+    If there ever is a tie the 'reset game' button can be clicked 
+    in order to clear the board so you can keep playing.
+    Have Fun!.
+</p>
 
-<p id="status">Player X's turn</p>
-<button onclick="resetBoard()">Reset Game</button>
+<div class="container">
+    <img src="bnstop.PNG" alt="Benny Stop">
+    <div>
+        <table>
+        <tr>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+        </tr>
+        <tr>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+        </tr>
+        <tr>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+            <td><button class="cell" onclick="makeMove(this)"></button></td>
+        </tr>
+        </table>
+    
+
+        <p id="status">Player X's turn</p>
+        <button onclick="resetBoard()">Reset Game</button>
+    </div>
+</div>
+<a href="https://bennois67.github.io/website">Click Here For Benny Stop!</a>
 
 <script>
   let currentPlayer = 'X';
