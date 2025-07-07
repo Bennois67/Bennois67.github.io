@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .box {
+            border-bottom: 2px solid black;
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            line-height: 50px;
+        }
+        .letter-button {
+            width: 40px;
+            height: 40px;
+        }
+        #hangman {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hangman Game</h1>
+    <div>
+        <label><input type="radio" name="category" id="animal_btn"> Animals</label>
+        <label><input type="radio" name="category" id="city_btn"> Cities</label>
+        <label><input type="radio" name="category" id="food_btn"> Foods</label>
+        <button id="randomize_btn">Randomize Word</button>
+    </div>
+
+    <div id="hangman"></div>
+    <div class="container" id="word_display"></div>
+    <div class="container" id="letter_buttons"></div>
+    <footer>Hangman Designed by Benny</footer>
+
+    <script>
+        const animals = ["cat", "zebra", "monkey"];
+        const cities = ["tokyo", "paris", "sydney"];
+        const foods = ["pizza", "ramen", "tacos"];
+
+        const animalBtn = document.getElementById("animal_btn");
+        const cityBtn = document.getElementById("city_btn");
+        const foodBtn = document.getElementById("food_btn");
+        const randomizeBtn = document.getElementById("randomize_btn");
+
+        const wordDisplay = document.getElementById("word_display");
+        const letterButtons = document.getElementById("letter_buttons");
+        const hangmanDiv = document.getElementById("hangman");
+
+        let chosenWord = "";
+        let wrongGuesses = 0;
+        let maxWrong = 6;
+
+        const hangmanStages = [
+`
++---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+
+ 
+`,
+`
++---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+
+
+
+`,
+`
++---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+ 
+`,
+`
++---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========
+ 
+`,
+`
++---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========
+ 
+`,
+`
++---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========
+`,
+`
++---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========
+`
+
+
+        ];
+
+        // Create letter buttons
+        for (let i = 65; i <= 90; i++) {
+            const button = document.createElement("button");
+            button.textContent = String.fromCharCode(i);
+            button.classList.add("letter-button");
+            button.disabled = true;
+            button.addEventListener("click", () => handleGuess(button.textContent.toLowerCase(), button));
+            letterButtons.appendChild(button);
+        }
+
+        function handleGuess(letter, button) {
+            button.disabled = true;
+            let correct = false;
+            const boxes = document.querySelectorAll(".box");
+
+            for (let i = 0; i < chosenWord.length; i++) {
+                if (chosenWord[i] === letter) {
+                    boxes[i].textContent = letter.toUpperCase();
+                    correct = true;
+                }
+            }
+
+            if (!correct) {
+                wrongGuesses++;
+                hangmanDiv.textContent = hangmanStages[wrongGuesses];
+            }
+
+            checkGameStatus();
+        }
+
+        function checkGameStatus() {
+            
+            const current = [...document.querySelectorAll(".box")].map(b => b.textContent).join("");
+            console.log(current.toLowerCase());
+            console.log(chosenWord);
+            if (current.toLowerCase() === chosenWord) {
+                
+
+
+                endGame();
+            } else if (wrongGuesses >= maxWrong) {
+                //alert("💀 You lost! The word was: " + chosenWord.toUpperCase());
+                revealWord();
+                endGame();
+            }
+        }
+
+        function revealWord() {
+            const boxes = document.querySelectorAll(".box");
+            for (let i = 0; i < chosenWord.length; i++) {
+                if (!boxes[i].textContent) {
+                    boxes[i].textContent = chosenWord[i].toUpperCase();
+                    boxes[i].style.color = "red";
+                }
+            }
+        }
+
+        function endGame() {
+            document.querySelectorAll(".letter-button").forEach(btn => btn.disabled = true);
+        }
+
+        randomizeBtn.addEventListener("click", () => {
+            let wordList = null;
+            if (animalBtn.checked) wordList = animals;
+            else if (cityBtn.checked) wordList = cities;
+            else if (foodBtn.checked) wordList = foods;
+
+            if (!wordList) {
+                alert("Please select a category!");
+                return;
+            }
+
+            chosenWord = wordList[Math.floor(Math.random() * wordList.length)];
+            console.log("Chosen Word:", chosenWord);
+
+            wordDisplay.innerHTML = "";
+            hangmanDiv.textContent = "";
+            wrongGuesses = 0;
+
+            for (let i = 0; i < chosenWord.length; i++) {
+                const box = document.createElement("div");
+                box.classList.add("box");
+                wordDisplay.appendChild(box);
+            }
+
+            document.querySelectorAll(".letter-button").forEach(btn => {
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
